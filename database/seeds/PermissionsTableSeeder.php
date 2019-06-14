@@ -12,16 +12,7 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = collect([
-            'create products',
-            'edit products',
-            'update product prices',
-            'update any product prices',
-            'delete products',
-            'delete any product',
-        ]);
-
-        $permissions->each(function ($permission) {
+        collect(config('permissions'))->each(function ($permission) {
             $this->createPermission($permission);
         });
     }
