@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Factory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Factory;
 
 class RegisterController extends Controller
 {
@@ -29,7 +28,8 @@ class RegisterController extends Controller
      * @param  \App\Models\User                   $users
      * @return void
      */
-    public function __construct(Factory $auth, User $users) {
+    public function __construct(Factory $auth, User $users)
+    {
         $this->auth  = $auth;
         $this->users = $users;
     }
@@ -52,7 +52,7 @@ class RegisterController extends Controller
                     'access_token' => $this->auth->fromUser($user),
                     'token_type'   => 'bearer',
                     'expires_in'   => $this->auth->factory()->getTTL() * 60,
-                ]
+                ],
             ]);
     }
 }
