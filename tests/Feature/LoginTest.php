@@ -8,11 +8,11 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Test login endpoint
      *
      * @return void
      */
-    public function testExample()
+    public function testLoginEndpoint()
     {
         $data = factory(User::class)->create();
 

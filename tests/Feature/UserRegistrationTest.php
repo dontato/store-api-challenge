@@ -8,11 +8,11 @@ use Tests\TestCase;
 class UserRegistrationTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Test Register endpoint.
      *
      * @return void
      */
-    public function testExample()
+    public function testRegisterEndpoint()
     {
         $data = factory(User::class)->make();
 
