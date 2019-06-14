@@ -35,7 +35,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Perform registration
+     * Perform login
      * @param  \App\Http\Requests\LoginRequest $request
      * @return \App\Http\Resources\UserResource
      */
