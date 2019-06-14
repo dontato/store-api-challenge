@@ -14,19 +14,24 @@ class UserRegistrationTest extends TestCase
      */
     public function testExample()
     {
-        $user = factory(User::class)->make();
+        $data = factory(User::class)->make();
 
         $response = $this->postJson('/api/register', [
-            'email'    => $user->email,
-            'name'     => $user->name,
+            'email'    => $data->email,
+            'name'     => $data->name,
             'password' => 'password',
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
 
         $response->assertJsonFragment([
-            'email' => $user->email,
-            'name'  => $user->name,
+            'email' => $data->email,
+            'name'  => $data->name,
         ]);
+
+        $user = User::where('email', $data->email)->first();
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertTrue($user->exists);
     }
 }
