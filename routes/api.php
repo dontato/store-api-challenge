@@ -13,4 +13,8 @@ $router->namespace('Auth')
         $router->post('password/remind', 'PasswordController@remind')
             ->name('password.remind')
             ->middleware('guest');
+
+        $router->post('password/reset', 'PasswordController@reset')
+            ->name('password.reset')
+            ->middleware('guest');
     });

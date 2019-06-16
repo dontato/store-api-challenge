@@ -34,18 +34,18 @@ class PasswordRecoveryTest extends TestCase
      */
     public function testResetEndpoint()
     {
-        $user  = factory(User::class)->create();
-        $token = new DatabaseTokenRepository(
+        $user   = factory(User::class)->create();
+        $tokens = new DatabaseTokenRepository(
             app('db')->connection(),
             app('hash'),
-            config('app.key'),
             config('auth.passwords.users.table'),
+            config('app.key'),
             config('auth.passwords.users.expire')
         );
 
         $response = $this->postJson('/api/password/reset', [
             'email'                 => $user->email,
-            'token'                 => $token,
+            'token'                 => $tokens->create($user),
             'password'              => 'password',
             'password_confirmation' => 'password',
         ]);
