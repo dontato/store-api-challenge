@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app['db']
+            ->connection()
+            ->getSchemaBuilder()
+            ->defaultStringLength(191);
     }
 }
