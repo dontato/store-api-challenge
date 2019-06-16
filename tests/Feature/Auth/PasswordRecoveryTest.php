@@ -3,8 +3,8 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
+use Tests\TestCase;
 
 class PasswordRecoveryTest extends TestCase
 {
@@ -34,7 +34,7 @@ class PasswordRecoveryTest extends TestCase
      */
     public function testResetEndpoint()
     {
-        $user   = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
         $tokens = new DatabaseTokenRepository(
             app('db')->connection(),

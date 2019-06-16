@@ -47,8 +47,8 @@ class UpdateAccountTest extends TestCase
         $response = $this
             ->actingAs($first_user, 'api')
             ->putJson('/api/account', [
-                'email'    => $second_user->email,
-                'name'     => $first_user->name
+                'email' => $second_user->email,
+                'name'  => $first_user->name
             ]);
 
         $response->assertStatus(422);

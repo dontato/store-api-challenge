@@ -83,7 +83,8 @@ class Handler extends ExceptionHandler
      * @inheritdoc
      */
     protected function unauthenticated(
-        $request, AuthenticationException $exception
+        $request,
+        AuthenticationException $exception
     ) {
         return $request->expectsJson() || $request->is('api/*')
             ? response()->json(['message' => $exception->getMessage()], 401)

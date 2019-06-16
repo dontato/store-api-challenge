@@ -87,10 +87,8 @@ abstract class BaseNotification extends Notification
             $this->toMailData($message, $notifiable);
         }
 
-        if (
-            ($action = $this->getLine('action', $notifiable)) &&
-            $url = $this->url($notifiable)
-        ) {
+        if (($action = $this->getLine('action', $notifiable)) &&
+            $url = $this->url($notifiable)) {
             $message->action($action, $url);
         }
 

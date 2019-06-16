@@ -54,9 +54,9 @@ class PasswordController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         $response = $this->passwords->broker()->reset(
-            $request->only(
-                'email', 'password', 'password_confirmation', 'token'
-            ),
+            $request->only([
+                'email', 'password', 'password_confirmation', 'token',
+            ]),
             function ($user, $password) {
                 $user
                     ->forceFill([
