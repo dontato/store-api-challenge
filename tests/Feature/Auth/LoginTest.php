@@ -28,4 +28,21 @@ class LoginTest extends TestCase
             'name'  => $data->name,
         ]);
     }
+
+    /**
+     * Test login with wrong credentials
+     *
+     * @return void
+     */
+    public function testLoginFail()
+    {
+        $data = factory(User::class)->create();
+
+        $response = $this->postJson('/api/login', [
+            'email'    => $data->email,
+            'password' => 'wrongpassword',
+        ]);
+
+        $response->assertStatus(401);
+    }
 }
