@@ -15,11 +15,14 @@ class CreateProductPricesTable extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('old_price');
-            $table->float('new_price');
+            $table->float('old_price')
+                ->comment('The price the product had before the update');
+            $table->float('new_price')
+                ->comment('What the price was set to');
             $table->bigInteger('product_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the product the price is related to');
             $table->timestamps();
             $table->foreign('product_id')
                 ->references('id')

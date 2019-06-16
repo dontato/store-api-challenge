@@ -15,18 +15,23 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('uuid');
+            $table->string('uuid')
+                ->comment('Universal Unique Identifier');
             $table->enum('status', [
                 'PENDING',
                 'RECEIVED',
                 'DISPATCHED',
                 'DELIVERED',
-            ]);
-            $table->float('total_products');
-            $table->float('total');
+            ])
+                ->comment('The order\'s current status');
+            $table->float('total_products')
+                ->comment('The amount of products that were ordered');
+            $table->float('total')
+                ->comment('The order\'s total amount');
             $table->bigInteger('user_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the user who placed the order');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')

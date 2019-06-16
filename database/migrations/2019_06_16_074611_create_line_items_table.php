@@ -15,15 +15,20 @@ class CreateLineItemsTable extends Migration
     {
         Schema::create('line_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('quantity');
-            $table->float('price');
-            $table->float('total');
+            $table->integer('quantity')
+                ->comment('How many products were ordered');
+            $table->float('price')
+                ->comment('The price the product had when ordered');
+            $table->float('total')
+                ->comment('The total for this line item');
             $table->bigInteger('order_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the order the line item is related to');
             $table->bigInteger('product_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the product that was ordered');
             $table->timestamps();
             $table->foreign('order_id')
                 ->references('id')

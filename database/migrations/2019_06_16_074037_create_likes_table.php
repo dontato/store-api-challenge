@@ -17,10 +17,12 @@ class CreateLikesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the liked product');
             $table->bigInteger('user_id')
                 ->unsigned()
-                ->nullable();
+                ->nullable()
+                ->comment('ID referencing the user that liked the product');
             $table->timestamps();
             $table->foreign('product_id')
                 ->references('id')
