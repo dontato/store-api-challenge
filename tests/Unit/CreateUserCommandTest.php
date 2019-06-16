@@ -20,9 +20,9 @@ class CreateUserCommandTest extends TestCase
         $name  = $this->faker->name;
 
         $this->artisan('store:admin:create', [
-            'name' => $name,
-            'email' => $email,
-            'password' => 'password',
+            '--name' => $name,
+            '--email' => $email,
+            '--password' => 'password',
         ]);
 
         $user = User::where('email', $email)->first();
