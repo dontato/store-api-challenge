@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -20,8 +21,8 @@ class CreateUserCommandTest extends TestCase
         $name  = $this->faker->name;
 
         $this->artisan('store:admin:create', [
-            '--name' => $name,
-            '--email' => $email,
+            '--name'     => $name,
+            '--email'    => $email,
             '--password' => 'password',
         ]);
 
