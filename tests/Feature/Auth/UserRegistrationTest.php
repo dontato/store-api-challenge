@@ -3,10 +3,13 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
 {
+    use WithFaker;
+
     /**
      * Test Register endpoint.
      *
@@ -14,22 +17,23 @@ class UserRegistrationTest extends TestCase
      */
     public function testRegisterEndpoint()
     {
-        $data = factory(User::class)->make();
+        $email = $this->faker->email;
+        $name  = $this->faker->name;
 
         $response = $this->postJson('/api/register', [
-            'email'    => $data->email,
-            'name'     => $data->name,
+            'email'    => $email,
+            'name'     => $name,
             'password' => 'password',
         ]);
 
         $response->assertStatus(201);
 
         $response->assertJsonFragment([
-            'email' => $data->email,
-            'name'  => $data->name,
+            'email' => $email,
+            'name'  => $name,
         ]);
 
-        $user = User::where('email', $data->email)->first();
+        $user = User::where('email', $email)->first();
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertTrue($user->exists);

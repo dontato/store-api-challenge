@@ -15,10 +15,10 @@ class PasswordRecoveryTest extends TestCase
      */
     public function testRemindEndpoint()
     {
-        $data = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
         $response = $this->postJson('/api/password/remind', [
-            'email' => $data->email,
+            'email' => $user->email,
         ]);
 
         $response->assertStatus(200);
