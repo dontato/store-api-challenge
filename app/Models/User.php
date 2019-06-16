@@ -13,6 +13,13 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable, HasRoles;
 
     /**
+     * The guard this model authenticates against
+     *
+     * @var string
+     */
+    protected $guard_name = 'api';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
