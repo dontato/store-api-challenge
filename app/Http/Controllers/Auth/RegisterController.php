@@ -30,6 +30,7 @@ class RegisterController extends Controller
      */
     public function __construct(Factory $auth, User $users)
     {
+        $auth->shouldUse('api');
         $this->auth  = $auth;
         $this->users = $users;
     }
