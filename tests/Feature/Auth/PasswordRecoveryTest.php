@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Tests\TestCase;
@@ -35,6 +35,7 @@ class PasswordRecoveryTest extends TestCase
     public function testResetEndpoint()
     {
         $user   = factory(User::class)->create();
+
         $tokens = new DatabaseTokenRepository(
             app('db')->connection(),
             app('hash'),
