@@ -34,6 +34,14 @@ $router->get('products/liked', 'ProductsController@liked')
     ->middleware('auth:api')
     ->name('products.liked');
 
+$router->post('products/{product}/likes', 'LikesController@store')
+    ->middleware('auth:api')
+    ->name('products.likes.store');
+
+$router->delete('products/{product}/likes', 'LikesController@destroy')
+    ->middleware('auth:api')
+    ->name('products.likes.destroy');
+
 $router->apiResource('products', 'ProductsController', [
     'only' => 'index'
 ]);

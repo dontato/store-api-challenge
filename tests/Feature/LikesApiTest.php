@@ -14,9 +14,11 @@ class LikesApiTest extends TestCase
      *
      * @return void
      */
-    public function testIndexEndpointSortedByAz()
+    public function testIndexEndpoint()
     {
-        $product  = factory(Product::class)->create();
+        $product  = factory(Product::class)->create([
+            'is_available' => 1
+        ]);
         $user     = factory(User::class)->create();
         $like     = $user->likes()->create([
             'product_id' => $product->id
@@ -36,7 +38,9 @@ class LikesApiTest extends TestCase
      */
     public function testStoreEndpoint()
     {
-        $product = factory(Product::class)->make();
+        $product = factory(Product::class)->create([
+            'is_available' => 1
+        ]);
         $user    = factory(User::class)->create();
 
         $response = $this->actingAs($user)
@@ -61,7 +65,9 @@ class LikesApiTest extends TestCase
      */
     public function testDeleteEndpoint()
     {
-        $product  = factory(Product::class)->create();
+        $product  = factory(Product::class)->create([
+            'is_available' => 1
+        ]);
         $user     = factory(User::class)->create();
         $like     = $user->likes()->create([
             'product_id' => $product->id
