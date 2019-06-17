@@ -2,15 +2,13 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Database\QueryException;
-use App\Models\User;
+use App\Cart\Cart;
+use App\Contracts\OrderFactory;
 use App\Models\Order;
 use App\Models\Product;
-use App\Services\Cart;
-use App\Contracts\OrderFactory;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class OrderFactoryTest extends TestCase
 {
