@@ -93,6 +93,21 @@ class ProductsApiTest extends TestCase
      *
      * @return void
      */
+    public function testUnauthorizedStoreEndpoint()
+    {
+        $product = factory(Product::class)->make();
+        $user    = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+            ->postJson('/api/admin/products', $product->toArray());
+        $response->assertStatus(403);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
     public function testShowEndpoint()
     {
         $product = factory(Product::class)->create();
@@ -130,6 +145,27 @@ class ProductsApiTest extends TestCase
             'name' => $data['name'],
             'uuid' => $product->uuid,
         ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testUpdateUnauthorizedEndpoint()
+    {
+        $product      = factory(Product::class)->create();
+        $data         = $product->toArray();
+        $data['name'] = "{$product->name} 2";
+        $user         = factory(User::class)->create();
+        $user->givePermissionTo('edit products');
+
+        $response = $this->actingAs($user)
+            ->putJson(
+                "/api/admin/products/{$product->uuid}",
+                $data
+            );
+        $response->assertStatus(403);
     }
 
     /**
