@@ -21,6 +21,11 @@ class Like extends Model
     ];
 
     /**
+     * @inheritdoc
+     */
+    protected $fillable = ['user_id', 'product_id'];
+
+    /**
      * Product liked
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
