@@ -30,6 +30,7 @@ class CreateLikesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->unique(['user_id', 'product_id']);
         });
     }
 

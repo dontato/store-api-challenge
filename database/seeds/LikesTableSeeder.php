@@ -13,7 +13,7 @@ class LikesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Like::class, 20)->create([
+        factory(Like::class, random_int(10, 20))->create([
             'product_id' => Product::inRandomOrder()->first()->id,
         ]);
     }
