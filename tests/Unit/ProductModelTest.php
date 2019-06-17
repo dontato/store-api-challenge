@@ -19,7 +19,7 @@ class ProductModelTest extends TestCase
     {
         $product = factory(Product::class)->create();
 
-        for ($i=1; $i < 3; $i++) {
+        for ($i = 1; $i < 3; $i++) {
             $product->price = $this->faker->randomFloat(2);
             $product->save();
 
