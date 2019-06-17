@@ -20,6 +20,7 @@ class ProductResource extends BaseResource
             'description' => $this->description,
             'uuid'        => $this->uuid,
             'sku'         => $this->sku,
+            'liked'       => $this->likedBy($user),
             'price'       => (float) $this->price,
             'price_human' => number_format((float) $this->price, 2, '.', ','),
             'stock'       => (int) $this->stock,

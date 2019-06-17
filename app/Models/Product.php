@@ -67,6 +67,22 @@ class Product extends Model implements ProductContract
     }
 
     /**
+     * Determine if a given user has liked a product
+     * @param  \App\Models\User|null   $user
+     * @return boolean
+     */
+    public function likedBy(User $user = null)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $user->likes
+            ->pluck('product_id')
+            ->contains($this->getAttribute('id'));
+    }
+
+    /**
      * The product price update log
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
