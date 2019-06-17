@@ -35,4 +35,18 @@ class ProductsController extends Controller
             ->sort($request->get('sort'));
         return ProductResource::collection($query->paginate(10));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function liked(Request $request)
+    {
+        $query = $this->products
+            ->available()
+            ->liked($request->user('api'))
+            ->sort($request->get('sort'));
+        return ProductResource::collection($query->paginate(10));
+    }
 }

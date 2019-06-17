@@ -130,4 +130,16 @@ class Product extends Model implements ProductContract
     {
         return $query->where('is_available', 1);
     }
+
+    /**
+     * Filter results to include only liked products
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  \App\Models\User                      $user
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLiked(Builder $query, User $user)
+    {
+        $liked_products = $user->likes->pluck('product_id');
+        return $query->whereIn('id', $liked_products->all());
+    }
 }

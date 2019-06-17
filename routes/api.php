@@ -30,6 +30,10 @@ $router->namespace('Admin')
         $router->apiResource('products', 'ProductsController');
     });
 
+$router->get('products/liked', 'ProductsController@liked')
+    ->middleware('auth:api')
+    ->name('products.liked');
+
 $router->apiResource('products', 'ProductsController', [
     'only' => 'index'
 ]);
