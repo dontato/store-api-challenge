@@ -16,6 +16,17 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
+    public function manage(User $user)
+    {
+        return $user->hasPermissionTo('manage products');
+    }
+
+    /**
+     * Determine whether the user can create products.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
     public function create(User $user)
     {
         return $user->hasPermissionTo('create products');

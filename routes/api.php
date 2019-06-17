@@ -32,6 +32,7 @@ $router->namespace('Auth')
 
 $router->namespace('Admin')
     ->middleware('auth:api')
+    ->middleware('can:manage,App\Models\Product')
     ->name('admin.')
     ->prefix('admin')
     ->group(function ($router) {
