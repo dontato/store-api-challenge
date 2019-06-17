@@ -13,9 +13,9 @@ class ProductPriceResource extends BaseResource
     public function toArray($request)
     {
         return [
-            'old_price'  => $this->slug,
-            'new_price'  => $this->uuid,
-            'user_id'    => $this->sku,
+            'old_price'  => $this->old_price,
+            'new_price'  => $this->new_price,
+            'user_id'    => $this->user_id,
             'created_at' => $this->asDate('created_at'),
             'user'       => new UserResource($this->whenLoaded('user')),
         ];
