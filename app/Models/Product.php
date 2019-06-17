@@ -8,6 +8,7 @@ use App\Eloquent\Ownlable;
 use App\Events\ProductUpdated;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model implements ProductContract
@@ -33,14 +34,6 @@ class Product extends Model implements ProductContract
     ];
 
     /**
-     * @inheritdoc
-     */
-    public function price()
-    {
-        return $this->getAttribute('price');
-    }
-
-    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -52,6 +45,14 @@ class Product extends Model implements ProductContract
                 'source' => 'name',
             ],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function price()
+    {
+        return $this->getAttribute('price');
     }
 
     /**
@@ -70,5 +71,52 @@ class Product extends Model implements ProductContract
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Order results by popularity
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  string                                $sort
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSort(Builder $query, $sort = 'az')
+    {
+        if ($sort == 'popularity') {
+            $query->popular();
+        } else {
+            $query->az();
+        }
+
+        return $query->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Order results by popularity
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePopular(Builder $query)
+    {
+        return $query->orderBy('like_count', 'desc');
+    }
+
+    /**
+     * Order results by name
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAz(Builder $query)
+    {
+        return $query->orderBy('name');
+    }
+
+    /**
+     * Filter results for public endpoint
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAvailable(Builder $query)
+    {
+        return $query->where('is_available', 1);
     }
 }

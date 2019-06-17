@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
+use Tests\TestCase;
 
 class ProductsApiTest extends TestCase
 {
@@ -15,13 +15,14 @@ class ProductsApiTest extends TestCase
      */
     public function testIndexEndpointSortedByAz()
     {
-        $data     = [
-            'name' => 'AAAAAAA',
+        $data = [
+            'name'         => 'AAAAAAA',
+            'is_available' => 1,
         ];
         $product  = factory(Product::class)->create($data);
         $response = $this->getJson('/api/products');
         $response->assertStatus(200);
-        $response->assertJsonFragment($data);
+        $response->assertJsonFragment(array_only($data, 'name'));
     }
 
     /**
@@ -31,23 +32,20 @@ class ProductsApiTest extends TestCase
      */
     public function testIndexEndpointSortedByPopularity()
     {
-        $users    = factory(User::class, 5)->create();
-        $products = factory(Product::class, 3)->create()
-            ->each(function (Product $product) use ($users) {
-                $users->each(function (User $user) use ($product) {
-                    $product->likes()
-                        ->create(['user_id' => $user->id]);
-                });
+        $product = factory(Product::class)->create([
+            'is_available' => 1,
+        ]);
+        $users = factory(User::class, 10)->create()
+            ->each(function (User $user) use ($product) {
+                $product->likes()
+                    ->create(['user_id' => $user->id]);
             });
 
         $response = $this->getJson('/api/products?sort=popularity');
         $response->assertStatus(200);
-
-        $products->each(function (Product $product) use ($response) {
-            $response->assertJsonFragment([
-                'uuid' => $product->uuid,
-            ]);
-        });
+        $response->assertJsonFragment([
+            'uuid' => $product->uuid,
+        ]);
     }
 
     /**

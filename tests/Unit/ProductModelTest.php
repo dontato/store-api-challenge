@@ -19,7 +19,7 @@ class ProductModelTest extends TestCase
     {
         $product = factory(Product::class)->create();
 
-        $product->price = $this->faker->randomFloat(2);
+        $product->price = $this->faker->randomFloat(2, 1, 2000);
         $product->save();
 
         $this->assertEquals($product->prices->count(), 1);

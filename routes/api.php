@@ -21,3 +21,7 @@ $router->namespace('Auth')
             ->middleware('auth:api')
             ->name('account');
     });
+
+$router->apiResource('products', 'ProductsController', [
+    'only' => 'index'
+]);
