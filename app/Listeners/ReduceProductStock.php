@@ -16,7 +16,6 @@ class ReduceProductStock
      */
     public function handle(ProductOrdered $event)
     {
-        logger('called');
         $product = $event->line_item->product;
         $product->stock -= $event->line_item->quantity;
         $product->save();
