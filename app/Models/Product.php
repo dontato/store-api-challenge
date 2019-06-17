@@ -10,10 +10,11 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model implements ProductContract
 {
-    use Sluggable, SoftDeletes, HasUuid, Ownlable;
+    use Sluggable, SoftDeletes, HasUuid, Ownlable, SearchableTrait;
 
     /**
      * The event map for the model.
@@ -42,6 +43,17 @@ class Product extends Model implements ProductContract
      */
     protected $fillable = [
         'name', 'description', 'sku', 'price', 'stock', 'is_available',
+    ];
+
+    /**
+     * Searchable rules.
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'name' => 10,
+            'description' => 5
+        ]
     ];
 
     /**
@@ -150,12 +162,31 @@ class Product extends Model implements ProductContract
     /**
      * Filter results to include only liked products
      * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  \App\Models\User                      $user
+     * @param  \App\Models\User|null                 $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeLiked(Builder $query, User $user)
+    public function scopeLiked(Builder $query, User $user = null)
     {
-        $liked_products = $user->likes->pluck('product_id');
-        return $query->whereIn('id', $liked_products->all());
+        if ($user) {
+            $liked_products = $user->likes->pluck('product_id');
+            $query->whereIn('id', $liked_products->all());
+        }
+
+        return $query;
+    }
+
+    /**
+     * Filter results to include only liked products
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  string                                $user
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLookup(Builder $query, $term)
+    {
+        if (!empty($term) && is_string($term) && trim($term)) {
+            $query->search($term, null, true);
+        }
+
+        return $query;
     }
 }

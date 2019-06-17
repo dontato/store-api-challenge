@@ -35,7 +35,8 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         $query = $this->products
-            ->sort($request->get('sort'));
+            ->sort($request->get('sort'))
+            ->lookup($request->get('term'));
         return ProductResource::collection($query->paginate(10));
     }
 

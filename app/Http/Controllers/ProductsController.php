@@ -32,7 +32,8 @@ class ProductsController extends Controller
     {
         $query = $this->products
             ->available()
-            ->sort($request->get('sort'));
+            ->sort($request->get('sort'))
+            ->lookup($request->get('term'));
         return ProductResource::collection($query->paginate(10));
     }
 
@@ -46,7 +47,8 @@ class ProductsController extends Controller
         $query = $this->products
             ->available()
             ->liked($request->user('api'))
-            ->sort($request->get('sort'));
+            ->sort($request->get('sort'))
+            ->lookup($request->get('term'));
         return ProductResource::collection($query->paginate(10));
     }
 }

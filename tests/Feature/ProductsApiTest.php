@@ -49,6 +49,25 @@ class ProductsApiTest extends TestCase
     }
 
     /**
+     * Test the index enpoint for products
+     *
+     * @return void
+     */
+    public function testIndexEndpointWithSearch()
+    {
+        $product = factory(Product::class)->create([
+            'name'         => 'Test name',
+            'is_available' => 1,
+        ]);
+
+        $response = $this->getJson("/api/products?term=Test");
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'uuid' => $product->uuid,
+        ]);
+    }
+
+    /**
      * A basic feature test example.
      *
      * @return void
