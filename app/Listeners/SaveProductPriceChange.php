@@ -29,7 +29,7 @@ class SaveProductPriceChange
     /**
      * Handle the event.
      *
-     * @param  ProductUpdated  $event
+     * @param  \App\Events\ProductUpdated  $event
      * @return void
      */
     public function handle(ProductUpdated $event)

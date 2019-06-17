@@ -62,4 +62,13 @@ class Product extends Model implements ProductContract
     {
         return $this->hasMany(ProductPrice::class);
     }
+
+    /**
+     * Product likes
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

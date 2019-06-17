@@ -47,6 +47,15 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * Products liked by user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed

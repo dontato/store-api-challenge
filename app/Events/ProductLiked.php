@@ -2,28 +2,28 @@
 
 namespace App\Events;
 
-use App\Models\Product;
+use App\Models\Like;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProductUpdated
+class ProductLiked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * Updated product
-     * @var \App\Models\Product
+     * Created or deleted like
+     * @var \App\Models\Like
      */
-    public $product;
+    public $like;
 
     /**
      * Create a new event instance.
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Like  $like
      * @return void
      */
-    public function __construct(Product $product)
+    public function __construct(Like $like)
     {
-        $this->product = $product;
+        $this->like = $like;
     }
 }
