@@ -27,6 +27,12 @@ class Cart implements CartContract
      */
     public function addProduct(Product $product, $quantity)
     {
+        if ($product->stock < $quantity) {
+            throw new \InvalidArgumentException(
+                "It's not possible to order a quantity greater than product stock"
+            );
+        }
+
         $item = new Item($product, $quantity);
         $this->items->push($item);
         return $item;
