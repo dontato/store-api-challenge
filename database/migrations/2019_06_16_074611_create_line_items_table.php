@@ -23,11 +23,9 @@ class CreateLineItemsTable extends Migration
                 ->comment('The total for this line item');
             $table->bigInteger('order_id')
                 ->unsigned()
-                ->nullable()
                 ->comment('ID referencing the order the line item is related to');
             $table->bigInteger('product_id')
                 ->unsigned()
-                ->nullable()
                 ->comment('ID referencing the product that was ordered');
             $table->timestamps();
             $table->foreign('order_id')

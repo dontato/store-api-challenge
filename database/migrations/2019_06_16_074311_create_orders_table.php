@@ -30,7 +30,6 @@ class CreateOrdersTable extends Migration
                 ->comment('The order\'s total amount');
             $table->bigInteger('user_id')
                 ->unsigned()
-                ->nullable()
                 ->comment('ID referencing the user who placed the order');
             $table->timestamps();
             $table->softDeletes();

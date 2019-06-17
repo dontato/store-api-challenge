@@ -21,7 +21,6 @@ class CreateProductPricesTable extends Migration
                 ->comment('What the price was set to');
             $table->bigInteger('product_id')
                 ->unsigned()
-                ->nullable()
                 ->comment('ID referencing the product the price is related to');
             $table->timestamps();
             $table->foreign('product_id')
