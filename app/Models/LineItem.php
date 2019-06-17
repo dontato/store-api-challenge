@@ -13,7 +13,9 @@ class LineItem extends Model
      * @var array
      */
     protected $casts = [
-        'total' => 'float',
+        'price'    => 'float',
+        'total'    => 'float',
+        'quantity' => 'integer',
     ];
 
     /**

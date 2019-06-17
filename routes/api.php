@@ -45,3 +45,7 @@ $router->delete('products/{product}/likes', 'LikesController@destroy')
 $router->apiResource('products', 'ProductsController', [
     'only' => 'index'
 ]);
+
+$router->apiResource('orders', 'OrdersController', [
+    'only' => ['index', 'store']
+]);

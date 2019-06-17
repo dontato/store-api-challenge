@@ -17,7 +17,8 @@ class Order extends Model implements OrderContract
      * @var array
      */
     protected $casts = [
-        'total' => 'float',
+        'total'          => 'float',
+        'total_products' => 'integer',
     ];
 
     /**

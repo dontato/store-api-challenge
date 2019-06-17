@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Like;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Fluent;
 use Tests\TestCase;
 
 class OrdersApiTest extends TestCase
@@ -19,22 +20,14 @@ class OrdersApiTest extends TestCase
      */
     public function testStoreEndpoint()
     {
-        $products = factory(Product::class, 3)->create([
-            'is_available' => 1
-        ]);
-
-        $cart = $products->map(function ($product) {
-            // Avoid ordering over product's stock
-            $quantity   = $this->faker->numberBetween(1, $product->stock);
-            $product_id = $product->id;
-            return compact('product_id', 'quantity');
-        });
-
+        $cart     = $this->mockCart();
         $response = $this->actingAs($this->mockUser())
-            ->postJson("/api/orders", $cart->all());
+            ->postJson("/api/orders", [
+                'items' => $cart->toArray(),
+            ]);
         $response->assertStatus(201);
         $response->assertJsonFragment([
-            'liked' => true,
+            'uuid' => $cart->first()->uuid
         ]);
     }
 
@@ -45,9 +38,35 @@ class OrdersApiTest extends TestCase
      */
     public function testIndexEndpoint()
     {
+        $cart     = $this->mockCart();
         $response = $this->actingAs($this->mockUser())
             ->getJson('/api/orders');
         $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'uuid' => $cart->first()->uuid
+        ]);
+    }
+
+    /**
+     * Use same products for both requests
+     * @return \App\Models\User
+     */
+    public function mockCart()
+    {
+        static $products;
+
+        if (!isset($products)) {
+            $products = factory(Product::class, 3)->create([
+                'is_available' => 1
+            ]);
+        }
+
+        return $products->map(function ($product) {
+            // Avoid ordering over product's stock
+            $quantity = $this->faker->numberBetween(1, $product->stock);
+            $uuid     = $product->uuid;
+            return new Fluent(compact('uuid', 'quantity'));
+        });
     }
 
     /**

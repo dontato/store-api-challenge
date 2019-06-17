@@ -4,6 +4,7 @@ namespace App\Eloquent;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 trait Ownlable
 {
@@ -28,5 +29,20 @@ trait Ownlable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Filter to include only records created by given user
+     * @param  \Illuminate\Database\Eloquent\Builder $builder
+     * @param  \App\Models\User                      $user
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMine(Builder $builder, User $user = null)
+    {
+        if ($user) {
+            $builder->where('user_id', $user->id);
+        }
+
+        return $builder;
     }
 }
