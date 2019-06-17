@@ -77,7 +77,15 @@ class ProductsController extends Controller
     public function update(UpdateRequest $request, $uuid)
     {
         $product = $this->products->findByUuidOrFail($uuid);
-        $product->fill($request->validated());
+
+        $this->authorize('update', $product);
+        $data = $request->validated();
+
+        if ($request->user('api')->cant('updatePrice', $product)) {
+            unset($data['price']);
+        }
+
+        $product->fill($data);
 
         if ($product->save()) {
             return new ProductResource($product);
@@ -94,6 +102,8 @@ class ProductsController extends Controller
     public function destroy($uuid)
     {
         $product = $this->products->findByUuidOrFail($uuid);
+
+        $this->authorize('delete', $product);
 
         if ($product->delete()) {
             return new ProductResource($product);
