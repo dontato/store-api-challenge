@@ -27,7 +27,6 @@ trait HasUuid
     {
         return $this->newQuery()
             ->where('uuid', $uuid)
-            ->select('*')
             ->first();
     }
 
@@ -40,7 +39,6 @@ trait HasUuid
     {
         return $this->newQuery()
             ->where('uuid', $uuid)
-            ->select('*')
-            ->firstOrFail([]);
+            ->firstOrFail();
     }
 }

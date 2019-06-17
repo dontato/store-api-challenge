@@ -6,7 +6,6 @@ use App\Http\Resources\LikeResource;
 use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 
 class LikesController extends Controller
 {
@@ -36,33 +35,33 @@ class LikesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \Illuminate\Http\Request         $request
+     * @param  string                           $uuid
+     * @return \App\Http\Resources\LikeResource
      */
     public function store(Request $request, $uuid)
     {
         $product = $this->products->findByUuidOrFail($uuid);
-        $product->likes()->firstOrCreate([
+        $like    = $product->likes()->firstOrCreate([
             'user_id' => $request->user('api')->id
         ]);
-        return new JsonResponse(['liked' => true], 201);
+        return new LikeResource($like);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \Illuminate\Http\Request         $request
+     * @param  string                           $uuid
+     * @return \App\Http\Resources\LikeResource
      */
     public function destroy(Request $request, $uuid)
     {
         $product = $this->products->findByUuidOrFail($uuid);
-        $like = $product->likes()
+        $like    = $product->likes()
             ->where('user_id', $request->user('api')->id)
-            ->first();
-
-        if ($like) {
-            $like->delete();
-        }
-
-        return new JsonResponse(['liked' => false]);
+            ->firstOrFail();
+        $like->delete();
+        return new LikeResource($like);
     }
 }
