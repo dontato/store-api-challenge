@@ -17,6 +17,7 @@ class ProductResource extends BaseResource
         return [
             'name'        => $this->name,
             'slug'        => $this->slug,
+            'description' => $this->description,
             'uuid'        => $this->uuid,
             'sku'         => $this->sku,
             'price'       => (float) $this->price,
@@ -27,8 +28,11 @@ class ProductResource extends BaseResource
             $this->mergeWhen(
                 $user && $user->hasPermissionTo('manage products'),
                 [
-                    'user'   => new UserResource($this->whenLoaded('user')),
-                    'prices' => ProductPriceResource::collection(
+                    'is_available' => (int) $this->is_available,
+                    'user'         => new UserResource(
+                        $this->whenLoaded('user')
+                    ),
+                    'prices'       => ProductPriceResource::collection(
                         $this->whenLoaded('prices')
                     ),
                 ]

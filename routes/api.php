@@ -22,6 +22,14 @@ $router->namespace('Auth')
             ->name('account');
     });
 
+$router->namespace('Admin')
+    ->middleware('auth:api')
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(function ($router) {
+        $router->apiResource('products', 'ProductsController');
+    });
+
 $router->apiResource('products', 'ProductsController', [
     'only' => 'index'
 ]);

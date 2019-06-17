@@ -7,8 +7,8 @@ use App\Eloquent\HasUuid;
 use App\Eloquent\Ownlable;
 use App\Events\ProductUpdated;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model implements ProductContract
@@ -30,7 +30,18 @@ class Product extends Model implements ProductContract
      * @var array
      */
     protected $casts = [
-        'price' => 'float',
+        'price'        => 'float',
+        'like_count'   => 'integer',
+        'id'           => 'integer',
+        'stock'        => 'integer',
+        'is_available' => 'integer',
+    ];
+
+    /**
+     * @inheritdoc
+     */
+    protected $fillable = [
+        'name', 'description', 'sku', 'price', 'stock', 'is_available',
     ];
 
     /**

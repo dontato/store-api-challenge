@@ -53,10 +53,35 @@ class ProductsApiTest extends TestCase
      *
      * @return void
      */
+    public function testAdminIndexEndpoint()
+    {
+        $data = [
+            'name'         => 'AAAAAAA',
+            'is_available' => 0,
+        ];
+        $product = factory(Product::class)->create($data);
+        $user    = factory(User::class)->create();
+        $user->assignRole('admin');
+
+        $response = $this->actingAs($user)
+            ->getJson('/api/admin/products');
+        $response->assertStatus(200);
+        $response->assertJsonFragment($data);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
     public function testStoreEndpoint()
     {
-        $product  = factory(Product::class)->make();
-        $response = $this->postJson('/api/products', $product->toArray());
+        $product = factory(Product::class)->make();
+        $user    = factory(User::class)->create();
+        $user->assignRole('admin');
+
+        $response = $this->actingAs($user)
+            ->postJson('/api/admin/products', $product->toArray());
         $response->assertStatus(201);
         $response->assertJsonFragment([
             'name' => $product->name,
@@ -70,8 +95,12 @@ class ProductsApiTest extends TestCase
      */
     public function testShowEndpoint()
     {
-        $product  = factory(Product::class)->create();
-        $response = $this->getJson("/api/products/{$product->uuid}");
+        $product = factory(Product::class)->create();
+        $user    = factory(User::class)->create();
+        $user->assignRole('admin');
+
+        $response = $this->actingAs($user)
+            ->getJson("/api/admin/products/{$product->uuid}");
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'uuid' => $product->uuid,
@@ -88,8 +117,14 @@ class ProductsApiTest extends TestCase
         $product      = factory(Product::class)->create();
         $data         = $product->toArray();
         $data['name'] = "{$product->name} 2";
+        $user         = factory(User::class)->create();
+        $user->assignRole('admin');
 
-        $response = $this->putJson("/api/products/{$product->uuid}", $data);
+        $response = $this->actingAs($user)
+            ->putJson(
+                "/api/admin/products/{$product->uuid}",
+                $data
+            );
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'name' => $data['name'],
@@ -104,8 +139,12 @@ class ProductsApiTest extends TestCase
      */
     public function testDeleteEndpoint()
     {
-        $product  = factory(Product::class)->create();
-        $response = $this->deleteJson("/api/products/{$product->uuid}");
+        $product = factory(Product::class)->create();
+        $user    = factory(User::class)->create();
+        $user->assignRole('admin');
+
+        $response = $this->actingAs($user)
+            ->deleteJson("/api/admin/products/{$product->uuid}");
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'uuid' => $product->uuid,
