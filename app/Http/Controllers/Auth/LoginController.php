@@ -58,4 +58,30 @@ class LoginController extends Controller
                 ],
             ]);
     }
+
+    /**
+     * Get the authenticated User.
+     * @return \App\Http\Resources\UserResource
+     */
+    public function me()
+    {
+        $user = $this->auth->user();
+        return new UserResource($user);
+    }
+
+    /**
+     * Refresh a token.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return (new UserResource($this->auth->user()))
+            ->additional([
+                'meta' => [
+                    'access_token' => $this->auth->refresh(),
+                    'token_type'   => 'bearer',
+                    'expires_in'   => $this->auth->factory()->getTTL() * 60,
+                ],
+            ]);
+    }
 }

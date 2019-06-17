@@ -20,6 +20,14 @@ $router->namespace('Auth')
         $router->put('account', 'AccountController@update')
             ->middleware('auth:api')
             ->name('account');
+
+        $router->post('auth/refresh', 'LoginController@refresh')
+            ->middleware('auth:api')
+            ->name('refresh');
+
+        $router->post('me', 'LoginController@me')
+            ->middleware('auth:api')
+            ->name('me');
     });
 
 $router->namespace('Admin')

@@ -45,4 +45,45 @@ class LoginTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    /**
+     * Test refresh token
+     *
+     * @return void
+     */
+    public function testRefreshToken()
+    {
+        $user = factory(User::class)->create();
+        $token = $this->app['auth']->login($user);
+
+        $response = $this->actingAs($user)
+            ->postJson('/api/auth/refresh', compact('token'));
+
+        $response->assertStatus(200);
+
+        $response->assertJsonFragment([
+            'email' => $user->email,
+            'name'  => $user->name,
+        ]);
+    }
+
+    /**
+     * Test refresh token
+     *
+     * @return void
+     */
+    public function testMeEndpoint()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+            ->postJson('/api/me');
+
+        $response->assertStatus(200);
+
+        $response->assertJsonFragment([
+            'email' => $user->email,
+            'name'  => $user->name,
+        ]);
+    }
 }
