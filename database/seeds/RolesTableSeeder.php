@@ -13,14 +13,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->createRole('admin', [
-            'create products',
-            'edit products',
-            'update product prices',
-            'update any product prices',
-            'delete products',
-            'delete any product',
-        ]);
+        $this->createRole('admin', config('permissions'));
     }
 
     /**

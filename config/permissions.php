@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'manage products',
     'create products',
     'edit products',
     'update product prices',
