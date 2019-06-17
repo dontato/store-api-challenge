@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Contracts\Product as ProductContract;
 use App\Eloquent\HasUuid;
+use App\Eloquent\Ownlable;
 use App\Events\ProductUpdated;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Product extends Model implements ProductContract
 {
-    use Sluggable, SoftDeletes, HasUuid;
+    use Sluggable, SoftDeletes, HasUuid, Ownlable;
 
     /**
      * The event map for the model.
@@ -20,6 +22,23 @@ class Product extends Model
     protected $dispatchesEvents = [
         'updating' => ProductUpdated::class,
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'float',
+    ];
+
+    /**
+     * @inheritdoc
+     */
+    public function price()
+    {
+        return $this->getAttribute('price');
+    }
 
     /**
      * Return the sluggable configuration array for this model.
