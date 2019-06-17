@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ProductOrdered;
 use Illuminate\Database\Eloquent\Model;
 
 class LineItem extends Model
@@ -13,6 +14,15 @@ class LineItem extends Model
      */
     protected $casts = [
         'total' => 'float',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => ProductOrdered::class,
     ];
 
     /**

@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Events\ProductLiked;
 use App\Events\ProductUpdated;
+use App\Events\ProductOrdered;
 use App\Listeners\SaveProductPriceChange;
+use App\Listeners\ReduceProductStock;
 use App\Listeners\UpdateProductLikeCount;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ProductUpdated::class => [
             SaveProductPriceChange::class,
+        ],
+        ProductOrdered::class => [
+            ReduceProductStock::class,
         ],
     ];
 

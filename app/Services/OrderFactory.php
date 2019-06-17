@@ -31,17 +31,13 @@ class OrderFactory implements OrderFactoryContract
             $order->save();
 
             $cart->items()->each(function (CartItem $item) use ($order) {
-                $product             = $item->product();
                 $line_item           = new LineItem;
                 $line_item->price    = $item->product()->price;
                 $line_item->total    = $item->total();
                 $line_item->quantity = $item->quantity();
-                $line_item->product()->associate($product);
+                $line_item->product()->associate($item->product());
                 $line_item->order()->associate($order);
                 $line_item->save();
-
-                $product->stock -= $line_item->quantity;
-                $product->save();
             });
 
             $db->commit();
