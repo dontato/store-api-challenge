@@ -24,8 +24,8 @@ class OrderFactoryTest extends TestCase
         extract($this->mockOrder());
 
         $this->assertInstanceOf(Order::class, $order);
-        $this->assertEquals($order->total, $line_items->sum('total'));
-        $this->assertEquals($order->total_items, $line_items->sum('quantity'));
+        $this->assertEquals($line_items->sum('total'), $order->total);
+        $this->assertEquals($line_items->sum('quantity'), $order->total_products);
     }
 
     /**
