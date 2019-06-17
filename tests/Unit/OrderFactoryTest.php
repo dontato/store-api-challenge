@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Fluent;
 use Tests\TestCase;
 
 class OrderFactoryTest extends TestCase
@@ -29,6 +30,24 @@ class OrderFactoryTest extends TestCase
     }
 
     /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+    public function testReduceStockWhenOrdered()
+    {
+        extract($this->mockOrder());
+
+        $product_id = $line_items->keys()->first();
+        $product    = Product::findOrFail($product_id);
+
+        $this->assertEquals(
+            $product->stock,
+            $line_items->get($product_id)->new_stock
+        );
+    }
+
+    /**
      * Place an order and return that order and expected line items
      * @return array
      */
@@ -40,21 +59,23 @@ class OrderFactoryTest extends TestCase
         $line_items = collect();
 
         $products->each(function ($product) use ($line_items, $cart) {
-            // Avoid ordering 0 products
-            $quantity = max(1, $this->faker->randomNumber(1));
             // Avoid ordering over product's stock
-            $quantity = min($quantity, $product->stock);
+            $quantity = $this->faker->numberBetween(1, $product->stock);
 
             // Add product to cart
             $cart->addProduct($product, $quantity);
 
-            $total = $product->price * $quantity;
-            $price = $product->price;
+            $total     = $product->price * $quantity;
+            $price     = $product->price;
+            $stock     = $product->stock;
+            $new_stock = $product->stock - $quantity;
 
             // Cache important values for further assertions
             $line_items->put(
                 $product->id,
-                compact('quantity', 'total', 'price')
+                new Fluent(
+                    compact('quantity', 'total', 'price', 'stock', 'new_stock')
+                )
             );
         });
 
