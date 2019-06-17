@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class PermissionSeedersTest extends TestCase
 {
@@ -17,7 +15,7 @@ class PermissionSeedersTest extends TestCase
     public function testPermissionsSeed()
     {
         $this->artisan('db:seed', [
-            '--class' => 'PermissionsTableSeeder'
+            '--class' => 'PermissionsTableSeeder',
         ]);
 
         collect(config('permissions'))->each(function ($name) {
@@ -31,7 +29,7 @@ class PermissionSeedersTest extends TestCase
     public function testRolesSeed()
     {
         $this->artisan('db:seed', [
-            '--class' => 'RolesTableSeeder'
+            '--class' => 'RolesTableSeeder',
         ]);
 
         $role = Role::findByName('admin', 'api');
