@@ -77,7 +77,7 @@ class LoginTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user)
-            ->postJson('/api/me');
+            ->getJson('/api/me');
 
         $response->assertStatus(200);
 

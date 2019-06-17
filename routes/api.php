@@ -25,7 +25,7 @@ $router->namespace('Auth')
             ->middleware('auth:api')
             ->name('refresh');
 
-        $router->post('me', 'LoginController@me')
+        $router->get('me', 'LoginController@me')
             ->middleware('auth:api')
             ->name('me');
     });
