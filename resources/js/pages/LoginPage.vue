@@ -36,6 +36,7 @@
 
 <script>
 import FocusesOnError from '../mixins/FocusesOnError';
+import each from 'lodash/each';
 
 export default {
   mixins: [FocusesOnError],

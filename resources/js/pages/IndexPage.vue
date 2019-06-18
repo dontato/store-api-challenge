@@ -7,7 +7,7 @@
           <p class="text-sm text-gray-600">{{product.description}}</p>
           <div class="flex -mx-2 pt-2">
             <div class="px-2">
-              <like-button :uuid="product.uuid" :liked.sync="product.liked" />
+              <like-button :uuid="product.uuid" v-model="product.liked" />
             </div>
             <div class="px-2">
               <!-- <cart-button :uuid="product.uuid" :liked.sync="product.liked" /> -->
@@ -39,6 +39,11 @@ export default {
         total: 0
       }
     };
+  },
+  watch: {
+    '$loggedIn'() {
+      this.refresh();
+    }
   },
   created() {
     this.refresh();
