@@ -33,6 +33,18 @@ Using docker you can run the project with the following command:
 
     docker-compose up
 
+Also be sure to set your environment
+
+    cp .env.example .env
+
+Your db host should be db
+
+    DB_HOST=db
+
+Also be sure to migrate the DB:
+
+    docker-compose exec app php artisan migrate --seed
+
 ## Setup the old fashioned way
 
 For this scenario, you will need:
