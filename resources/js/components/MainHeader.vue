@@ -2,7 +2,7 @@
   <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
     <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
       <div class="w-1/2 pl-2 md:pl-0">
-        <router-link class="text-gray-900 text-base xl:text-xl no-underline hover:no-underline font-bold font-dosis" :to="{ name: 'index' }">
+        <router-link class="text-gray-900 text-base xl:text-xl no-underline hover:no-underline font-bold font-display uppercase" :to="{ name: 'index' }">
           <font-awesome-icon class="text-xl mr-1" icon="cookie-bite" />
           Snack Store
         </router-link>

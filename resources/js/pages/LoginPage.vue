@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center justify-center w-full px-8">
     <div class="text-center mb-16">
-      <router-link class="text-gray-900 text-base text-2xl no-underline hover:no-underline font-bold font-dosis" :to="{ name: 'index' }">
+      <router-link class="text-gray-900 text-base text-2xl no-underline hover:no-underline font-bold font-display uppercase" :to="{ name: 'index' }">
         <font-awesome-icon class="text-3xl mr-1" icon="cookie-bite" />
         Snack Store
       </router-link>
