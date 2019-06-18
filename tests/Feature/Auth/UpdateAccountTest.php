@@ -21,7 +21,7 @@ class UpdateAccountTest extends TestCase
             ->putJson('/api/account', [
                 'email'    => $user->email,
                 'name'     => "{$user->name} 2",
-                'password' => 'password',
+                'password' => 'Secret123!',
             ]);
 
         $response->assertStatus(200);

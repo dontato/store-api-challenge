@@ -47,8 +47,8 @@ class PasswordRecoveryTest extends TestCase
         $response = $this->postJson('/api/password/reset', [
             'email'                 => $user->email,
             'token'                 => $tokens->create($user),
-            'password'              => 'password',
-            'password_confirmation' => 'password',
+            'password'              => 'Secret123!',
+            'password_confirmation' => 'Secret123!',
         ]);
 
         $response->assertStatus(200);

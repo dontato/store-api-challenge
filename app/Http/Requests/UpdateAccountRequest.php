@@ -28,7 +28,10 @@ class UpdateAccountRequest extends FormRequest
 
         return [
             'name'     => ['required', 'string'],
-            'password' => ['string', 'nullable'],
+            'password' => [
+                'string', 'nullable',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/',
+            ],
             'email'    => [
                 'required', 'string',
                 (new Unique('users', 'email'))
