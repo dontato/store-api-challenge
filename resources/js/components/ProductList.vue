@@ -1,7 +1,10 @@
 <template>
   <div class="pt-32 container px-2 md:px-4 mx-auto flex-col justify-between">
-    <div class="shadow list-group rounded border border-gray-300 bg-white">
+    <div v-if="products.length" class="shadow list-group rounded border border-gray-300 bg-white">
       <product-item :product="product" :last-product-in-page="lastProductInPage" v-for="(product, index) in products" :class="{'rounded-t': !index, 'rounded-b': index == lastProductInPage, 'border-b border-grey-300': index !== lastProductInPage}" :key="product.uuid" />
+    </div>
+    <div class="p-4 bg-gray-300 border border-gray-500 text-gray-600" v-else>
+      There were no results.
     </div>
     <div class="py-8 flex justify-center" v-if="meta.lastPage > 1">
       <pagination-links :value="query.page" :click-handler="onPageChange" :page-count="meta.lastPage" container-class="pagination" active-class="active" prev-text="&laquo;" next-text="&raquo;" />
@@ -21,8 +24,7 @@ export default {
     return {
       products: [],
       query: {
-        page: 1,
-        term: ''
+        page: 1
       },
       meta: {
         lastPage: 0,

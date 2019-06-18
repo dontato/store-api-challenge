@@ -2,6 +2,7 @@ import IndexPage from './pages/IndexPage.vue';
 import LoginPage from './pages/LoginPage.vue';
 import RegisterPage from './pages/RegisterPage.vue';
 import AccountPage from './pages/AccountPage.vue';
+import CartPage from './pages/CartPage.vue';
 
 const routes = [
   {
@@ -41,6 +42,15 @@ const routes = [
       title: 'Update My Account',
       nav: false,
       auth: true,
+    }
+  },
+  {
+    name: 'cart',
+    path: '/cart',
+    component: CartPage,
+    meta: {
+      title: 'My Cart',
+      nav: true
     }
   }
 ];

@@ -21,8 +21,8 @@ export default {
   },
   methods: {
     addToCart(product, quantity) {
-      var item  = find(this.products, {uuid: product.uuid}) || {quantity: 0};
-      var index = findIndex(this.products, {uuid: product.uuid});
+      var item  = find(this.cart, {uuid: product.uuid}) || {quantity: 0};
+      var index = findIndex(this.cart, {uuid: product.uuid});
 
       if (item.stock < (item.quantity + quantity)) {
         this.$notie.alert({
@@ -47,21 +47,22 @@ export default {
       this.persistCart();
     },
     removeFromCart(product) {
-      var index = findIndex(this.products, {uuid: product.uuid});
 
       this.$notie.confirm({
         text: 'Are you sure you want to remove this product from your cart?'
-      });
+      }, () => {
+        var index = findIndex(this.cart, {uuid: product.uuid});
 
-      if (index > -1) {
-        this.cart.slice(index, 1);
-      }
+        if (index > -1) {
+          this.cart.splice(index, 1);
+        }
 
-      this.persistCart();
+        this.persistCart();
 
-      this.$notie.alert({
-        type: 'success',
-        text: `${product.name} removed from cart`
+        this.$notie.alert({
+          type: 'success',
+          text: `${product.name} removed from cart`
+        });
       });
     },
     persistCart() {
