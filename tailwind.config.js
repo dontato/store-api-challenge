@@ -4,6 +4,9 @@ module.exports = {
       fontFamily: {
         'display': ['Dosis'],
         'body': ['Open Sans'],
+      },
+      screens: {
+        xs: {'max': '575px'},
       }
     }
   },

@@ -36,4 +36,36 @@
   }
 }
 
+.pagination {
+  @apply flex -mx-2;
+
+  li {
+    @apply px-2 leading-none ;
+
+    a {
+      @apply rounded-full flex items-center justify-center w-12 h-12 bg-gray-300 text-gray-700 outline-none leading-none;
+    }
+
+    &.active a {
+      @apply bg-purple-500 text-white;
+    }
+
+    &:first-child a, &:last-child a {
+      @apply bg-teal-500 font-bold text-xl text-white leading-none ;
+    }
+  }
+
+  @screen xs {
+    @apply -mx-1;
+
+    li {
+      @apply px-1 ;
+
+      a {
+        @apply w-8 h-8 text-xs ;
+      }
+    }
+  }
+}
+
 @tailwind utilities;

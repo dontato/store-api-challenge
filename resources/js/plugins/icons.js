@@ -7,12 +7,13 @@ import {
   faSearch,
   faCaretDown,
   faCookieBite,
-  faBars
+  faBars,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faHome, faShoppingCart, faShoppingBag, faSearch, faCaretDown, faCookieBite,
-  faBars
+  faBars, faHeart
 );
 
 export default {
