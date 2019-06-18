@@ -9,7 +9,7 @@ Vue.use(require('./plugins/auth').default);
 Vue.use(require('./plugins/validator').default);
 Vue.use(require('./plugins/dayjs').default);
 Vue.use(require('./plugins/directives').default);
-// Vue.use(require('@/components').default);
+Vue.use(require('./plugins/icons').default);
 
 export default new Vue({
   router: Vue.router,
