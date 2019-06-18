@@ -17,10 +17,18 @@
         <input v-model="data.password" class="form-field" name="password" type="password" placeholder="Password" v-validate="{regex: /^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/ }">
       </form-group>
 
-      <div class="text-center">
-        <button class="bg-blue-500 block w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" type="submit">
-          Update account
+      <div class="text-center mb-4">
+        <button class="bg-blue-500 block w-full hover:bg-blue-700 text-white py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" type="submit">
+          Register account
         </button>
+      </div>
+      <div class="text-center mb-2 text-xs">
+        Already have an account?
+      </div>
+      <div class="text-center">
+        <router-link :to="{name: 'login'}" class="bg-gray-300 block w-full hover:bg-gray-400 text-blue-500 border border-gray-500 text-sm py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" >
+          Sign In
+        </router-link>
       </div>
     </form>
   </div>
@@ -28,6 +36,7 @@
 
 <script>
 import FocusesOnError from '../mixins/FocusesOnError';
+import each from 'lodash/each';
 
 export default {
   mixins: [FocusesOnError],
@@ -57,12 +66,21 @@ export default {
     },
     async update() {
       try {
-        const response = await this.$http.put('account', this.data);
+        const response = await this.$auth.register({
+          url: 'register',
+          data: this.data,
+          autoLogin: false,
+          redirect: '/'
+        });
 
+        this.$auth.token(null, response.data.meta.access_token);
         this.$auth.user(response.data.data);
+        this.$auth.watch.authenticated = true;
+        this.$auth.watch.loaded = true;
+        document.cookie = 'rememberMe=true';
 
         this.$notie.alert({
-          text: `Your account was updated`,
+          text: `Your account was created`,
           type: 'success'
         });
       } catch (e) {
@@ -73,7 +91,7 @@ export default {
         this.focusOnError();
 
         this.$notie.alert({
-          text: 'Wrong credentials',
+          text: 'Please validate the input you provided',
           type: 'error'
         });
       }

@@ -14,11 +14,22 @@
         <input v-model="data.password" class="form-field" name="password" type="password" placeholder="Password" v-validate="{required: true}">
       </form-group>
 
-      <div class="flex items-center justify-end">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      <div class="text-center mb-4">
+        <button class="bg-blue-500 block w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" type="submit">
           Sign In
         </button>
       </div>
+
+      <div class="text-center mb-2 text-xs">
+        Don&#039;t have an account yet?
+      </div>
+      <div class="text-center">
+        <router-link :to="{name: 'register'}" class="bg-gray-300 block w-full hover:bg-gray-400 text-blue-500 border border-gray-500 text-sm py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" >
+          Sign Up
+        </router-link>
+      </div>
+
+
     </form>
   </div>
 </template>
@@ -58,6 +69,12 @@ export default {
           type: 'success'
         });
       } catch (e) {
+        each(e.response.data.errors || [], (errors, field)  => {
+          this.errors.add({field, msg: errors[0]});
+        });
+
+        this.focusOnError();
+
         this.$notie.alert({
           text: 'Wrong credentials',
           type: 'error'

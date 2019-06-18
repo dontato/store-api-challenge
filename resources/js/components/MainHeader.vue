@@ -10,9 +10,14 @@
       <div class="w-1/2 pr-0">
         <div class="flex items-center justify-end relative">
           <auth-menu v-if="$loggedIn" />
-          <div v-else class="block pr-2 md:pr-0">
-            <router-link class="leading-none text-sm inline-block px-3 py-2 border rounded text-white bg-green-500 border-green-600 hover:text-gray-100 hover:border-green-900 hover:bg-green-800 focus:outline-none" :to="{ name: 'login' }">Iniciar Sesión</router-link>
-          </div>
+          <template v-else>
+            <div class="block pr-2">
+              <router-link class="leading-none text-sm inline-block px-3 py-2 border rounded text-white bg-green-500 border-green-600 hover:text-gray-100 hover:border-green-900 hover:bg-green-800 focus:outline-none" :to="{ name: 'login' }">Sign In</router-link>
+            </div>
+            <div class="block pr-2 md:pr-0">
+              <router-link class="leading-none text-sm inline-block px-3 py-2 border rounded text-white bg-blue-500 border-blue-600 hover:text-gray-100 hover:border-blue-900 hover:bg-blue-800 focus:outline-none" :to="{ name: 'register' }">Sign Up</router-link>
+            </div>
+          </template>
           <div class="block md:hidden">
             <button @click="toggleMenu" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-teal-500 appearance-none focus:outline-none">
               <font-awesome-icon icon="bars" class="fill-current" />

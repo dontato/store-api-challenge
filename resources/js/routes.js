@@ -1,5 +1,6 @@
 import IndexPage from './pages/IndexPage.vue';
 import LoginPage from './pages/LoginPage.vue';
+import RegisterPage from './pages/RegisterPage.vue';
 import AccountPage from './pages/AccountPage.vue';
 
 const routes = [
@@ -18,6 +19,16 @@ const routes = [
     component: LoginPage,
     meta: {
       title: 'Login',
+      nav: false,
+      auth: false,
+    }
+  },
+  {
+    name: 'register',
+    path: '/register',
+    component: RegisterPage,
+    meta: {
+      title: 'Register',
       nav: false,
       auth: false,
     }
