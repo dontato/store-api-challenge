@@ -36,6 +36,9 @@ export default {
   watch: {
     '$loggedIn'() {
       this.refresh();
+    },
+    url() {
+      this.refresh();
     }
   },
   created() {

@@ -28,7 +28,7 @@
       <div class="w-full flex-grow md:flex md:items-center lg:w-full md:block mt-2 md:mt-0 bg-white z-20" :class="{hidden: !open}">
         <main-menu />
         <div class="relative pull-right pl-4 pr-4 md:pr-0">
-          <input type="search" placeholder="Search" class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
+          <input v-model="term" type="search" placeholder="Search" class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
           <div class="absolute search-icon flex items-center inset-y-0 left-0 pl-6">
             <font-awesome-icon icon="search" />
           </div>
@@ -43,9 +43,27 @@
 import MainMenu from './MainHeader/MainMenu.vue';
 import AuthMenu from './MainHeader/AuthMenu.vue';
 import HasMenu from '../mixins/HasMenu';
+import debounce from 'lodash/debounce';
 
 export default {
   components: {MainMenu, AuthMenu},
-  mixins: [HasMenu]
+  mixins: [HasMenu],
+  data() {
+    return {term: ''};
+  },
+  watch: {
+    term: debounce(function (term) {
+      if (term) {
+        this.$router.push({
+          name: 'index',
+          query: {term}
+        })
+      } else {
+        this.$router.push({
+          name: 'index'
+        })
+      }
+    }, 500)
+  }
 }
 </script>
