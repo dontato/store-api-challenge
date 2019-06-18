@@ -25,7 +25,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name'     => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'password' => [
+                'required', 'string',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/',
+            ],
             'email'    => ['required', 'string', 'email', 'unique:users,email'],
         ];
     }
