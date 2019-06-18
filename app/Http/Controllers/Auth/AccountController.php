@@ -45,8 +45,11 @@ class AccountController extends Controller
     {
         $data = array_except($request->validated(), 'password');
 
-        if (array_get($data, 'password')) {
-            $data['password'] = bcrypt($data['password']);
+        if (
+            $request->has('password') &&
+            $password = $request->get('password')
+        ) {
+            $data['password'] = bcrypt($password);
         }
 
         $user = $this->auth->user();

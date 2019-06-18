@@ -56,7 +56,9 @@ class LoginController extends Controller
                     'token_type'   => 'bearer',
                     'expires_in'   => $this->auth->factory()->getTTL() * 60,
                 ],
-            ]);
+            ])
+            ->response()
+            ->header('Authorization', $token);
     }
 
     /**
@@ -78,10 +80,12 @@ class LoginController extends Controller
         return (new UserResource($this->auth->user()))
             ->additional([
                 'meta' => [
-                    'access_token' => $this->auth->refresh(),
+                    'access_token' => $token = $this->auth->refresh(),
                     'token_type'   => 'bearer',
                     'expires_in'   => $this->auth->factory()->getTTL() * 60,
                 ],
-            ]);
+            ])
+            ->response()
+            ->header('Authorization', $token);
     }
 }

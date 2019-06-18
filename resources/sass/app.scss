@@ -4,9 +4,68 @@
 
 // Bootstrap
 @import '~animate.css';
+@import "~notie/src/notie";
 
 @tailwind base;
 
 @tailwind components;
+
+.form-group {
+  @apply mb-4 ;
+}
+
+.form-label {
+  @apply block text-sm mb-2 text-gray-500 ;
+}
+
+.form-field {
+  @apply shadow appearance-none border border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight ;
+
+  &:focus {
+    @apply outline-none shadow-outline border-blue-500 ;
+  }
+}
+
+.has-error {
+  .form-label {
+    @apply text-red-500 ;
+  }
+
+  .form-field {
+    @apply border-red-500 ;
+  }
+}
+
+.pagination {
+  @apply flex -mx-2;
+
+  li {
+    @apply px-2 leading-none ;
+
+    a {
+      @apply rounded-full flex items-center justify-center w-12 h-12 bg-gray-300 text-gray-700 outline-none leading-none;
+    }
+
+    &.active a {
+      @apply bg-purple-500 text-white;
+    }
+
+    &:first-child a, &:last-child a {
+      @apply bg-teal-500 font-bold text-xl text-white leading-none ;
+    }
+  }
+
+  @screen xs {
+    @apply -mx-1;
+
+    li {
+      @apply px-1 ;
+
+      a {
+        @apply w-8 h-8 text-xs ;
+      }
+    }
+  }
+}
 
 @tailwind utilities;
