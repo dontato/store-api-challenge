@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\OrderFactory as OrderFactoryContract;
+use App\Services\OrderFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(OrderFactoryContract::class, function () {
+            return app(OrderFactory::class);
+        });
     }
 
     /**
@@ -23,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app['db']
+            ->connection()
+            ->getSchemaBuilder()
+            ->defaultStringLength(191);
     }
 }

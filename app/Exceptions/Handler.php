@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,5 +49,45 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function prepareResponse($request, Exception $e)
+    {
+        if ($request->is('api/*')) {
+            return $this->prepareJsonResponse($request, $e);
+        }
+
+        return parent::prepareResponse($request, $e);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function convertValidationExceptionToResponse(
+        ValidationException $e,
+        $request
+    ) {
+        if ($e->response) {
+            return $e->response;
+        }
+
+        return $request->expectsJson() || $request->is('api/*')
+            ? $this->invalidJson($request, $e)
+            : $this->invalid($request, $e);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function unauthenticated(
+        $request,
+        AuthenticationException $exception
+    ) {
+        return $request->expectsJson() || $request->is('api/*')
+            ? response()->json(['message' => $exception->getMessage()], 401)
+            : redirect()->guest(route('login'));
     }
 }

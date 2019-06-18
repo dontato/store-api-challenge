@@ -2,71 +2,58 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Factory;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
+     * Auth factory
+     * @var \Illuminate\Contracts\Auth\Factory
      */
-    protected $redirectTo = '/home';
+    protected $auth;
 
     /**
-     * Create a new controller instance.
-     *
+     * User model
+     * @var \App\Models\User
+     */
+    protected $users;
+
+    /**
+     * Create a new controller instance
+     * @param  \Illuminate\Contracts\Auth\Factory $auth
+     * @param  \App\Models\User                   $users
      * @return void
      */
-    public function __construct()
+    public function __construct(Factory $auth, User $users)
     {
-        $this->middleware('guest');
+        $auth->shouldUse('api');
+        $this->auth  = $auth;
+        $this->users = $users;
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * Perform registration
+     * @param  \App\Http\Requests\RegisterRequest $request
+     * @return \App\Http\Resources\UserResource
      */
-    protected function validator(array $data)
+    public function register(RegisterRequest $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+        $data             = $request->validated();
+        $data['password'] = bcrypt($request->get('password'));
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = $this->users->create($data);
+
+        return (new UserResource($user))
+            ->additional([
+                'meta' => [
+                    'access_token' => $this->auth->fromUser($user),
+                    'token_type'   => 'bearer',
+                    'expires_in'   => $this->auth->factory()->getTTL() * 60,
+                ],
+            ]);
     }
 }

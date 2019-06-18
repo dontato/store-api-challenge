@@ -3,37 +3,85 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Factory;
+use Illuminate\Http\JsonResponse;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Auth factory
+     * @var \Illuminate\Contracts\Auth\Factory
      */
-    protected $redirectTo = '/home';
+    protected $auth;
 
     /**
-     * Create a new controller instance.
-     *
+     * User model
+     * @var \App\Models\User
+     */
+    protected $users;
+
+    /**
+     * Create a new controller instance
+     * @param  \Illuminate\Contracts\Auth\Factory $auth
+     * @param  \App\Models\User                   $users
      * @return void
      */
-    public function __construct()
+    public function __construct(Factory $auth, User $users)
     {
-        $this->middleware('guest')->except('logout');
+        $auth->shouldUse('api');
+        $this->auth  = $auth;
+        $this->users = $users;
+    }
+
+    /**
+     * Perform login
+     * @param  \App\Http\Requests\LoginRequest $request
+     * @return \App\Http\Resources\UserResource
+     */
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->validated();
+
+        if (!$token = $this->auth->attempt($credentials)) {
+            return new JsonResponse(['error' => 'Unauthorized'], 401);
+        }
+
+        return (new UserResource($this->auth->user()))
+            ->additional([
+                'meta' => [
+                    'access_token' => $token,
+                    'token_type'   => 'bearer',
+                    'expires_in'   => $this->auth->factory()->getTTL() * 60,
+                ],
+            ]);
+    }
+
+    /**
+     * Get the authenticated User.
+     * @return \App\Http\Resources\UserResource
+     */
+    public function me()
+    {
+        $user = $this->auth->user();
+        return new UserResource($user);
+    }
+
+    /**
+     * Refresh a token.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return (new UserResource($this->auth->user()))
+            ->additional([
+                'meta' => [
+                    'access_token' => $this->auth->refresh(),
+                    'token_type'   => 'bearer',
+                    'expires_in'   => $this->auth->factory()->getTTL() * 60,
+                ],
+            ]);
     }
 }

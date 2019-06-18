@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
+use App\Events\ProductLiked;
+use App\Events\ProductUpdated;
+use App\Events\ProductOrdered;
+use App\Listeners\SaveProductPriceChange;
+use App\Listeners\ReduceProductStock;
+use App\Listeners\UpdateProductLikeCount;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,8 +21,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
+        Registered::class     => [
             SendEmailVerificationNotification::class,
+        ],
+        ProductLiked::class   => [
+            UpdateProductLikeCount::class,
+        ],
+        ProductUpdated::class => [
+            SaveProductPriceChange::class,
+        ],
+        ProductOrdered::class => [
+            ReduceProductStock::class,
         ],
     ];
 
