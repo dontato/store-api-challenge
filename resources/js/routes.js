@@ -1,5 +1,6 @@
 import IndexPage from './pages/IndexPage.vue';
 import LoginPage from './pages/LoginPage.vue';
+import AccountPage from './pages/AccountPage.vue';
 
 const routes = [
   {
@@ -19,6 +20,16 @@ const routes = [
       title: 'Login',
       nav: false,
       auth: false,
+    }
+  },
+  {
+    name: 'account',
+    path: '/account',
+    component: AccountPage,
+    meta: {
+      title: 'Update My Account',
+      nav: false,
+      auth: true,
     }
   }
 ];

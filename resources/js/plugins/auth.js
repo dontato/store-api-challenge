@@ -10,7 +10,7 @@ export default {
         forbiddenRedirect: {path: '/403'},
         authRedirect: {path: '/login'},
         loginData: {url: 'login', method: 'POST', redirect: '/', fetchUser: true},
-        fetchData: {url: 'me', method: 'GET', enabled: false},
+        fetchData: {url: 'me', method: 'GET', enabled: true},
         refreshData: {url: 'auth/refresh', method: 'POST', enabled: false, interval: 30},
         parseUserData: function (data) {
           return data.data;

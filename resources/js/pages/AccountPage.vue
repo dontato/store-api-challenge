@@ -7,16 +7,19 @@
       </router-link>
     </div>
     <form class="max-w-sm w-full" @submit.prevent="submit">
+      <form-group name="name" label="Name">
+        <input v-model="data.name" class="form-field" name="name" type="name" placeholder="Name" v-validate="{required: true}">
+      </form-group>
       <form-group name="email" label="E-mail">
         <input v-model="data.email" class="form-field" name="email" type="email" placeholder="E-mail" v-validate="{required: true, email: true}">
       </form-group>
       <form-group name="password" label="Password">
-        <input v-model="data.password" class="form-field" name="password" type="password" placeholder="Password" v-validate="{required: true}">
+        <input v-model="data.password" class="form-field" name="password" type="password" placeholder="Password" v-validate="{regex: /^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/ }">
       </form-group>
 
       <div class="flex items-center justify-end">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-          Sign In
+          Update account
         </button>
       </div>
     </form>
@@ -31,10 +34,15 @@ export default {
   data() {
     return  {
       data: {
+        name: '',
         email: '',
         password: ''
       }
     };
+  },
+  created() {
+    this.data.name  = this.$user.name;
+    this.data.email = this.$user.email;
   },
   methods: {
     async submit() {
@@ -45,16 +53,16 @@ export default {
         return;
       }
 
-      return this.login();
+      return this.update();
     },
-    async login() {
+    async update() {
       try {
-        const response = await this.$auth.login({
-          data: this.data
-        });
+        const response = await this.$http.put('account', this.data);
+
+        this.$auth.user(response.data.data);
 
         this.$notie.alert({
-          text: `Welcome, ${response.data.data.name}`,
+          text: `Your account was updated`,
           type: 'success'
         });
       } catch (e) {
