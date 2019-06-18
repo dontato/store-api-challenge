@@ -50,10 +50,12 @@ class RegisterController extends Controller
         return (new UserResource($user))
             ->additional([
                 'meta' => [
-                    'access_token' => $this->auth->fromUser($user),
+                    'access_token' => $token = $this->auth->fromUser($user),
                     'token_type'   => 'bearer',
                     'expires_in'   => $this->auth->factory()->getTTL() * 60,
                 ],
-            ]);
+            ])
+            ->response()
+            ->header('Authorization', $token);
     }
 }

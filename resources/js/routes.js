@@ -1,4 +1,5 @@
 import IndexPage from './pages/IndexPage.vue';
+import LoginPage from './pages/LoginPage.vue';
 
 const routes = [
   {
@@ -7,7 +8,17 @@ const routes = [
     component: IndexPage,
     meta: {
       title: 'Home',
-      hideSearch: true
+      nav: true
+    }
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: LoginPage,
+    meta: {
+      title: 'Login',
+      nav: false,
+      auth: false,
     }
   }
 ];

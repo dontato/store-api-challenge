@@ -5,7 +5,9 @@
       leave-active-class="animated fadeOutUp">
       <main-header v-if="$route.meta.nav" />
     </transition>
-    <router-view class="flex-1 flex" :key="$route.fullPath"></router-view>
+    <template v-if="$auth.ready()">
+      <router-view class="flex-1 flex" :key="$route.fullPath"></router-view>
+    </template>
     <div class="flex-none text-center w-full">
       <div class="container mx-auto text-sm text-gray-500 border-t border-gray-400 py-3">
         &copy; {{year}}. All rights reserved

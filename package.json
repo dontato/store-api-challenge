@@ -14,24 +14,24 @@
         "@fortawesome/free-solid-svg-icons": "^5.9.0",
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@websanova/vue-auth": "^2.21.14-beta",
+        "animate.css": "^3.7.2",
         "axios": "^0.19.0",
         "cross-env": "^5.1",
         "dayjs": "^1.8.14",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.5",
+        "notie": "^4.3.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "tailwindcss": "^1.0.4",
-        "vee-validate": "^2.2.10",
+        "vee-validate": "2.0.9",
         "vue": "^2.5.17",
+        "vue-axios": "^2.1.4",
         "vue-click-outside": "^1.0.7",
         "vue-router": "^3.0.6",
         "vue-template-compiler": "^2.6.10",
         "vuejs-paginate": "^2.1.0"
     },
-    "dependencies": {
-        "animate.css": "^3.7.2",
-        "vue-axios": "^2.1.4"
-    }
+    "dependencies": {}
 }

@@ -3151,6 +3151,144 @@
     animation-iteration-count: 1 !important;
   }
 }
+.notie-container {
+  font-size: 1.6rem;
+  height: auto;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 2147483647;
+  box-sizing: border-box;
+  -o-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  -ms-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 900px) {
+  .notie-container {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .notie-container {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .notie-container {
+    font-size: 1rem;
+  }
+}
+
+.notie-background-success {
+  background-color: #57BF57;
+}
+
+.notie-background-warning {
+  background-color: #D6A14D;
+}
+
+.notie-background-error {
+  background-color: #E1715B;
+}
+
+.notie-background-info {
+  background-color: #4D82D6;
+}
+
+.notie-background-neutral {
+  background-color: #A0A0A0;
+}
+
+.notie-background-overlay {
+  background-color: #FFFFFF;
+}
+
+.notie-textbox {
+  color: #FFFFFF;
+  padding: 20px;
+}
+
+.notie-textbox-inner {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.notie-overlay {
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2147483646;
+}
+
+.notie-button {
+  color: #FFFFFF;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.notie-element {
+  color: #FFFFFF;
+  padding: 10px;
+}
+
+.notie-element-half {
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.notie-element-third {
+  display: inline-block;
+  width: 33.3333%;
+  box-sizing: border-box;
+}
+
+.notie-alert {
+  cursor: pointer;
+}
+
+.notie-input-field {
+  background-color: #FFFFFF;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  outline: 0;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.notie-select-choice-repeated {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+}
+
+.notie-date-selector-inner {
+  margin: 0 auto;
+  max-width: 900px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.notie-date-selector-inner [contenteditable], .notie-date-selector-inner [contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
+.notie-date-selector-up {
+  transform: rotate(180deg);
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -3778,6 +3916,47 @@ video {
   .container{
     max-width: 1280px;
   }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  color: #a0aec0;
+}
+
+.form-field {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-width: 1px;
+  border-color: #cbd5e0;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  color: #4a5568;
+  line-height: 1.25;
+}
+
+.form-field:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  border-color: #4299e1;
+}
+
+.has-error .form-label {
+  color: #f56565;
+}
+
+.has-error .form-field {
+  border-color: #f56565;
 }
 
 .appearance-none{
@@ -6718,6 +6897,14 @@ video {
 
 .font-mono{
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-display{
+  font-family: Dosis;
+}
+
+.font-body{
+  font-family: Open Sans;
 }
 
 .font-hairline{
@@ -13643,6 +13830,14 @@ video {
 
   .sm\:font-mono{
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .sm\:font-display{
+    font-family: Dosis;
+  }
+
+  .sm\:font-body{
+    font-family: Open Sans;
   }
 
   .sm\:font-hairline{
@@ -20571,6 +20766,14 @@ video {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .md\:font-display{
+    font-family: Dosis;
+  }
+
+  .md\:font-body{
+    font-family: Open Sans;
+  }
+
   .md\:font-hairline{
     font-weight: 100;
   }
@@ -27497,6 +27700,14 @@ video {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .lg\:font-display{
+    font-family: Dosis;
+  }
+
+  .lg\:font-body{
+    font-family: Open Sans;
+  }
+
   .lg\:font-hairline{
     font-weight: 100;
   }
@@ -34421,6 +34632,14 @@ video {
 
   .xl\:font-mono{
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .xl\:font-display{
+    font-family: Dosis;
+  }
+
+  .xl\:font-body{
+    font-family: Open Sans;
   }
 
   .xl\:font-hairline{
