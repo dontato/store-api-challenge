@@ -109,6 +109,18 @@ If you do not have [Valet](https://laravel.com/docs/5.8/valet) installed on your
 
 And access it through `http://localhost:8080`
 
+## Creating privileged users
+
+In order to create privileged users, you should run the command:
+
+    php artisan store:admin:create
+
+In order to promote users to a privileged account, you should run the command:
+
+    php artisan store:admin:promote --email=ACCOUNT_EMAIL
+
+Of course, be sure to replace the ACCOUNT_EMAIL with the actual account email
+
 ## Running Tests
 
 To run tests you will need to setup a `.env.testing` file, heres an example of what it should look like:
