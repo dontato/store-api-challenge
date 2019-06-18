@@ -65,6 +65,10 @@ export default {
         });
       });
     },
+    emptyCart() {
+      this.cart = [];
+      this.persistCart();
+    },
     persistCart() {
       window.localStorage.setItem('cart', JSON.stringify(this.cart));
     }

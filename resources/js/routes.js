@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage.vue';
 import RegisterPage from './pages/RegisterPage.vue';
 import AccountPage from './pages/AccountPage.vue';
 import CartPage from './pages/CartPage.vue';
+import LikedPage from './pages/LikedPage.vue';
 
 const routes = [
   {
@@ -51,6 +52,16 @@ const routes = [
     meta: {
       title: 'My Cart',
       nav: true
+    }
+  },
+  {
+    name: 'liked',
+    path: '/liked',
+    component: LikedPage,
+    meta: {
+      title: 'Liked Products',
+      nav: true,
+      auth: true,
     }
   }
 ];

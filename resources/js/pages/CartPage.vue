@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-32 container px-2 md:px-4 mx-auto flex-col justify-between">
+  <div class="pt-32 container px-2 md:px-4 mx-auto flex-col">
     <div v-if="$root.cart.length" class="shadow list-group rounded border border-gray-300 bg-white">
       <div class="p-8 flex flex-wrap items-center relative" v-for="(item, index) in $root.cart">
         <div class="flex-1">
@@ -26,10 +26,19 @@
     <div class="p-4 bg-gray-300 border border-gray-500 text-gray-600" v-else>
       There are no products in your cart.
     </div>
+    <div class="py-4" v-if="$loggedIn">
+      <button class="bg-blue-500 block w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline" type="button" @click="placeOrder">
+        Place your order
+      </button>
+    </div>
+    <div class="mt-4 p-4 bg-gray-300 border border-gray-500 text-gray-600" v-else>
+      You must <router-link class="text-purple-500" :to="{ name: 'login'}">login</router-link> to place your order
+    </div>
   </div>
 </template>
 
 <script>
+import map from 'lodash/map';
 export default {
   computed: {
     totalProductsInPage() {
@@ -42,6 +51,28 @@ export default {
   methods: {
     removeFromCart(product) {
       this.$root.removeFromCart(product)
+    },
+    placeOrder() {
+      this.$notie.confirm({
+        text: 'Are you sure you want to place your order?'
+      }, async () => {
+        try {
+          var items    = map(this.$root.cart, (item) => {
+            return {uuid: item.uuid, quantity: item.quantity};
+          });
+          var response = await this.$http.post('orders', {items});
+          this.$notie.alert({
+            type: 'success',
+            text: `Your order was placed`
+          });
+          this.$root.emptyCart();
+        } catch (e) {
+          this.$notie.alert({
+            type: 'error',
+            text: `Something went wrong`
+          });
+        }
+      });
     }
   }
 }

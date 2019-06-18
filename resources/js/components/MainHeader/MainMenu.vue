@@ -4,9 +4,10 @@
       <font-awesome-icon slot="icon" icon="home" />
       Home
     </menu-item>
-    <menu-item :link="{name: 'cart'}">
+    <menu-item class="relative" :link="{name: 'cart'}">
       <font-awesome-icon slot="icon" icon="shopping-cart" />
       My Cart
+      <span v-if="$root.cart.length" class="top-0 right-0 -mr-3 bg-red-500 text-white rounded-full text-xs w-4 h-4 absolute text-center">{{$root.cart.length}}</span>
     </menu-item>
     <menu-item :link="{name: 'liked'}">
       <font-awesome-icon slot="icon" icon="heart" />
