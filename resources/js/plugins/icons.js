@@ -8,12 +8,13 @@ import {
   faCaretDown,
   faCookieBite,
   faBars,
+  faPlus,
   faHeart
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faHome, faShoppingCart, faShoppingBag, faSearch, faCaretDown, faCookieBite,
-  faBars, faHeart
+  faBars, faPlus, faHeart
 );
 
 export default {

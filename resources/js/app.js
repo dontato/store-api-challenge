@@ -1,6 +1,7 @@
 import axios from 'axios';
-
+import find from 'lodash/find';
 import Vue from 'vue/dist/vue.runtime';
+import HasCart from './mixins/HasCart';
 import App from './components/App.vue';
 import Vue2Filters from 'vue2-filters';
 
@@ -16,6 +17,7 @@ Vue.use(require('./components').default);
 Vue.use(Vue2Filters);
 
 export default new Vue({
+  mixins: [HasCart],
   router: Vue.router,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app');

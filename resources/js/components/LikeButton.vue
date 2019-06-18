@@ -1,6 +1,6 @@
 <template>
   <a href @click.prevent="likeOrUnlike" class="no-underline block flex items-center text-sm font-hairline py-2 px-3 border border-red-500 hover:bg-red-500 rounded-sm" :class="{'text-red-500 hover:text-white': !value, 'text-white bg-red-500': value}">
-    <font-awesome-icon class="fill-current text-xl" :class="svgClass" icon="heart" />
+    <font-awesome-icon class="fill-current text-xl" icon="heart" />
     <span class="pl-2 hidden md:block">{{value?'Unlike':'Like'}}</span>
   </a>
 </template>

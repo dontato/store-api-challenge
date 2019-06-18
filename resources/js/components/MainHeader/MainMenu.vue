@@ -8,10 +8,10 @@
       <font-awesome-icon slot="icon" icon="shopping-cart" />
       My Cart
     </menu-item>
-    <!-- <menu-item :link="{name: 'orders'}">
-      <font-awesome-icon slot="icon" icon="shopping-bag" />
-      My Orders
-    </menu-item> -->
+    <menu-item :link="{name: 'liked'}">
+      <font-awesome-icon slot="icon" icon="heart" />
+      Liked Products
+    </menu-item>
   </ul>
 </template>
 
