@@ -27,6 +27,12 @@ First of all, you will need to clone the repository:
 
     git clone git@github.com:dontato/store-api-challenge.git
 
+## Setup using Docker
+
+Using docker you can run the project with the following command:
+
+    docker-compose up
+
 ## Setup the old fashioned way
 
 For this scenario, you will need:
