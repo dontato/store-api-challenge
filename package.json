@@ -19,7 +19,7 @@
         "cross-env": "^5.1",
         "dayjs": "^1.8.14",
         "laravel-mix": "^4.0.7",
-        "lodash": "^4.17.5",
+        "lodash": "^4.17.21",
         "notie": "^4.3.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
